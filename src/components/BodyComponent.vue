@@ -253,7 +253,7 @@ a {
   position: relative;
 }
 
-.nested-dropdown-content {
+.nested-dropdown-content { 
   display: none;
   position: absolute;
   left: 100%; 
