@@ -34,7 +34,7 @@ span {
 }
 
 .buy-now {
-  padding: 10px 20px;
+  padding: 5px 20px;
   background-color: #073f14;
   color: #fff;
   font-weight: 600;
