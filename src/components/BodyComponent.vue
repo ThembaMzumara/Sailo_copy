@@ -53,8 +53,20 @@
             <a href="#">Choice 1</a>
             <a href="#">Choice 2</a>
             <a href="#">Choice 3</a>
+
+            <div class="nested-dropdown">
+              <a href="#">Choice 4 &#x25B6;</a>
+              <div class="nested-dropdown-content">
+                <a href="#">Sub Choice 1</a>
+                <a href="#">Sub Choice 2</a>
+                <a href="#">Sub Choice 3</a>
+                <a href="#">Sub Choice 4</a>
+                <a href="#">Sub Choice 5</a>
+              </div>
+            </div>
           </div>
         </div>
+
 
         <div class="dropdown">
           <button class="dropbtn">Contact</button>
@@ -63,8 +75,8 @@
       </nav>
 
       <div class="action-buttons">
-        <button class="inherit">search</button>
         <button class="inherit">cart</button>
+        <button class="inherit">search</button>
         <button class="get-in-touch">Get in Touch</button>
       </div>
     </header>
@@ -81,42 +93,12 @@
 
     <div class="bar">
       <ul>
-        <li>
+        <li v-for="item in barItems" :key="item.id">
           <div>
-            <img src="" alt="" />
+            <img :src="item.imgSrc" :alt="item.imgAlt" />
             <p>
-              <span id="number"> 500+ </span> <br />
-              Highly specialised employees
-            </p>
-          </div>
-        </li>
-
-        <li>
-          <div>
-            <img src="" alt="" />
-            <p>
-              <span id="number"> 500+ </span> <br />
-              Countries around the world
-            </p>
-          </div>
-        </li>
-
-        <li>
-          <div>
-            <img src="" alt="" />
-            <p>
-              <span id="number"> 500+ </span> <br />
-              Historical Award Winning
-            </p>
-          </div>
-        </li>
-
-        <li>
-          <div>
-            <img src="" alt="" />
-            <p>
-              <span id="number"> 500+ </span> <br />
-              Successfully completed projects
+              <span id="number">{{ item.number }}</span> <br />
+              {{ item.description }}
             </p>
           </div>
         </li>
@@ -127,7 +109,40 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref } from 'vue';
+
+const barItems = ref([
+  {
+    id: 1,
+    imgSrc: 'path/to/your/image1.jpg',
+    imgAlt: 'Specialized Employees',
+    number: '500+',
+    description: 'Highly specialised employees',
+  },
+  {
+    id: 2,
+    imgSrc: 'path/to/your/image2.jpg',
+    imgAlt: 'Countries Around the World',
+    number: '500+',
+    description: 'Countries around the world',
+  },
+  {
+    id: 3,
+    imgSrc: 'path/to/your/image3.jpg',
+    imgAlt: 'Award Winning',
+    number: '500+',
+    description: 'Historical Award Winning',
+  },
+  {
+    id: 4,
+    imgSrc: 'path/to/your/image4.jpg',
+    imgAlt: 'Completed Projects',
+    number: '500+',
+    description: 'Successfully completed projects',
+  },
+]);
+</script>
 
 <style scoped>
 .body-container {
@@ -135,7 +150,7 @@
   position: relative;
   text-align: center;
   background-color: black;
-  padding: 70px 40px;
+  padding: 66px 40px;
   color: white;
   font-family: 'Roboto', sans-serif;
 
@@ -156,6 +171,7 @@
 .nav-links {
   display: flex;
   margin: 0;
+  padding: 0;
 }
 
 a {
@@ -165,15 +181,33 @@ a {
 .dropbtn {
   background-color: inherit;
   color: white;
-  font-size: 16px;
+  font-size: 18px;
   border: none;
   cursor: pointer;
-  padding-top: 8px;
-  width: 80px;
+  padding-top: 30px; 
+  margin: -50px 0 0 0 ;
+  width: 90px;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.dropbtn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background-color: transparent;
+  transition: background-color 0.3s ease;
+}
+
+.dropbtn:hover::before {
+  background-color: #ff5e14;
 }
 
 .dropbtn:hover {
-  border: #ff5e14;
+  color: #ff5e14;
 }
 
 .dropdown {
@@ -215,6 +249,25 @@ a {
   display: block;
 }
 
+.nested-dropdown {
+  position: relative;
+}
+
+.nested-dropdown-content {
+  display: none;
+  position: absolute;
+  left: 100%; 
+  top: 0;
+  background-color: #f9f9f9;
+  min-width: 190px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.nested-dropdown:hover .nested-dropdown-content {
+  display: block;
+}
+
 .inherit {
   margin-left: 10px;
   color: #fff;
@@ -232,6 +285,10 @@ a {
   color: white;
   font-weight: 600;
   transition: background-color 0.3s ease;
+}
+
+.get-in-touch{
+  padding: 20px 50px;
 }
 
 .par {
@@ -260,20 +317,26 @@ h1 {
   left: 0;
   right: 0;
   top: 900px;
-  height: 200px;
+  height: 300px;
   z-index: 2;
-  margin: 10px 50px;
+  margin: 10px 55px;
   background-color: #f9f9f9;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  
+  display: flex;
+  justify-content: center; 
+  align-items: center;    
+  text-align: center;      
 }
 
 ul {
   list-style: none;
   display: flex;
   flex-wrap: wrap;
-  margin: 0 auto;
+  margin: 0;
   padding: 0;
-  justify-content: center;
+  justify-content: center; 
+  align-items: center;    
   color: black;
   max-width: 100%;
 }
@@ -281,11 +344,14 @@ ul {
 li {
   width: 330px;
   margin: 10px;
+  padding: 40px;
   display: flex;
-  flex-wrap: wrap;
-  margin: 10px;
-  justify-content: center;
+  flex-direction: column;  
+  align-items: center;     
+  justify-content: center; 
+  text-align: center;      
 }
+
 
 .bar p {
   font-size: 22px;
@@ -298,6 +364,6 @@ li {
 }
 
 .below {
-  height: 400px;
+  height: 700px;
 }
 </style>
